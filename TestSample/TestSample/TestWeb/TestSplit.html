@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head >
+    <title>Test Sample</title>
+    <link rel="stylesheet" href="/content/bootstrap.css" />
+    <link rel="stylesheet" href="/content/bootstrap-theme.css" />
+    <script lang="text/javascript">
+
+        function SplitValue(strValue, separator, isCustom) {
+            removeData();
+            if (strValue != null && strValue != '') {
+                if (isCustom) {
+                    var splittedArray = strValue.split(',');
+                }
+                else { var splittedArray = customSplit(strValue, ','); }
+                document.getElementById('msg').innerHTML = '<h4>Splitted Value </h4>';
+
+                fillData(splittedArray);
+            }
+            else {
+                document.getElementById('msg').innerHTML='<h5>Please enter Data to be splitted</h5>';
+                document.getElementById('txtStr').focus();
+            }
+        }
+
+        function fillData(splittedArray) {
+            var ul = document.getElementById('listData');
+            for (var i = 0; i < splittedArray.length; i++) {
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode(splittedArray[i]));
+                li.setAttribute("id", i);
+                ul.appendChild(li);
+            }
+        }
+        function removeData() {
+            var ul = document.getElementById('listData');
+            ul.innerHTML='';
+        }
+        function customSplit(strValue, separator) {
+            var splittedArray = [], tempVal = '', i = 0, j = 0, f;
+            while (i < strValue.length) {
+                f = strValue[i++];
+                if (f === separator) {
+                    j++;
+                    tempVal = ''
+                } else {
+                    tempVal = tempVal + f;
+                    splittedArray[j] = tempVal;
+                }
+            } if (!splittedArray[0]) {
+                splittedArray[0] = '';
+            } return splittedArray;
+        }
+
+    </script>
+</head>
+<body>
+    <form id="form1">
+        <div class="modal-header">
+            <img src="img/TestWeb.jpg" style="height: 50px; width: 100%" />
+        </div>
+        <div style="width:80%; text-align:left; padding:100px 100px  50px 50px;">
+            <div style="width:100%; ">
+              
+                    <b> Please enter text to be splitted with delimiter ','</b>
+                    <input type="text" id="txtStr" />
+              
+            </div>
+            <div class="modal-header" style="width:100%; padding-top: 50px ">
+                <input type="button" value="Javascript Custom Split function" onclick="javascript: SplitValue(document.getElementById('txtStr').value, ',', true);" />
+
+                <input type="button" value="Javascript Split function" onclick="javascript: SplitValue(document.getElementById('txtStr').value, ',', false);" />
+            </div>
+           
+            <div  style="width:100%; padding-top: 50px ">
+               <span id="msg"></span>
+                <ul class="list" id="listData"></ul>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
